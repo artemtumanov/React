@@ -1,0 +1,63 @@
+.App {
+  text-align: center;
+}
+
+.main-container{
+  background-color: rgb(153, 168, 151);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* justify-content: space-between; */
+  font-size: calc(10px + 2vmin);
+  color: rgb(0, 0, 0);
+}
+.messageForm{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 30px;
+}
+.message-list{
+  background-color: aliceblue;
+  width: 600px;
+  border: 1px solid black;
+  border-radius: 10px;
+  max-height: 600px;
+  overflow: auto;
+}
+.message-wrapper{
+  max-width: 350px;
+  border: 1px solid black;
+  margin: 10px;
+  border-radius: 5px;
+  background-color: #75e4f345;
+  margin: 10px 10px 10px auto;
+}
+.message-author {
+  font-style: italic;
+    text-align: center;
+    font-size: 17pt;
+    border-bottom: 1px solid black;
+    font-weight: bold;
+}
+.message-text{
+  word-wrap: break-word;
+  font-size: 12pt;
+}
+.bot-message{
+  margin: 10px auto 10px 10px;
+}
+
+textarea {
+  width: 300px;
+  height: 100px;
+  resize: none;
+  border: none;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: wheat;
+  border: none;
+  cursor: pointer;
+}
