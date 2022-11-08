@@ -1,79 +1,87 @@
-import {useEffect,  useState} from 'react';
-import Message from './Message';
-import Chat from './Chat';
-import MessageInput from './MessageInput';
 import './App.css';
 import Container from '@mui/material/Container';
-import Box from '@mui/material/Box';
 import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import Collapse from '@mui/material/Collapse';
+import ListItemButton from '@mui/material/ListItemButton';
+import { Outlet, Link as RouterLink } from "react-router-dom";
 import {AUTHOR} from './constant/common'
+import * as React from 'react';
 
+const initialChats = {
+  id1: {
+      name: 'Chat 1',
+      messages: [{ author: AUTHOR.bot, text: 'Welcome to Chat1'}]
+  },
+  id2: {
+      name: 'Chat 2',
+      messages: [{ author: AUTHOR.bot, text: 'Welcome to Chat2'}]
+  }
+}
 
 function App() {
-  const [messageList, setMessageList] = useState([]);
-  
-  const [chatList, setChatList] = useState([]);
-  
-  function addMessage(author, text) {
-    setMessageList([...messageList, { author: author, text: text}])
-  }
-
-  const getChatList = () => {
-    setChatList([{chatName: 'first', chatId: '1x'}, {chatName: 'second', chatId: '2x'}])
-  }
-
-
-  const bot =() => {
-    let text = 'Спасибо за отзыв';    
-      addMessage(AUTHOR.bot, text);    
-  }
-  useEffect(() => {
-    getChatList();
-  }, []);
-  
-  
-  useEffect(() => {
-    //getChatList();
-      if(messageList.length && messageList[messageList.length-1].author !== AUTHOR.bot){
-        let timerId = setTimeout(bot,1500);
-        return ()=>{
-          clearTimeout(timerId);
-        }
-      }
+  const [chatList, setChatList] = React.useState(initialChats);
+  const [open, setOpen] = React.useState(true);
+  const addMessage = (chatId, message) =>{
     
-  });
+    setChatList({...chatList, [chatId]:{ name: chatList[chatId].name, messages:[...chatList[chatId].messages, message]}});
+  }
 
+  const handleClick = () => {
+    //console.log(props);
+    setOpen(!open);
+  };
 
-
+  function ListItemLink(props) {
+    const { icon, primary, to } = props;
+  
+    const renderLink = React.useMemo(
+      () =>
+        React.forwardRef(function Link(itemProps, ref) {
+          return <RouterLink to={to} ref={ref} {...itemProps} role={undefined} />;
+        }),
+      [to],
+    );
+  
+    return (
+      <li>
+        <ListItem button component={renderLink}>
+          {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
+          <ListItemText primary={primary} />
+        </ListItem>
+      </li>
+    );
+  }
+  
   return (
     <div className="App">
       <Container maxWidth="sm" sx={{display: 'flex'}}>
-        <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.default', border: 'solid' }}>
-          <List>
-          {chatList.map((chat, index) => (<Chat key={index} data={chat}/>))}
-          </List>
-        </Box>
-        <Box
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          width: '100%',
-          maxWidth: 360,
-          alignItems: 'center',
-          justifyContent: 'center',
-          bgcolor: 'background.default',
-          color: 'text.primary',
-          borderRadius: 1,
-          p: 3,
-        }}>
-        <List className="message-list">
-          {messageList.map((singlemessage, index)=> (<Message key={index} data={singlemessage}/>))}
+      <List>
+        <ListItemLink to="/" primary="Home" />
+        <ListItemLink to="profile" primary="Profile" />
+        
+        <ListItemButton onClick={handleClick}>
+        <ListItemText primary="Chats" />
+        {open ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          {Object.keys(chatList).map((id, key)=>(<ListItemLink to={'chats/'+id} primary={chatList[id].name} key={key}/>))}
+          
         </List>
-        <MessageInput addMessage={addMessage}/>
-        </Box>
+      </Collapse>
+      </List>
+      <Outlet context={[chatList, addMessage]}/>
+        
       </Container>
     </div>
 );
 }
 
 export default App;
+
+
