@@ -1,7 +1,7 @@
-import { useRef, useState} from 'react';
+import { useRef, useState } from 'react';
 import { Button, Box, TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import {AUTHOR} from '../constant/common'
+import { AUTHOR } from '../constant/common'
 
 const MessageInput = (props) => {
     const inputEl = useRef();
@@ -10,17 +10,17 @@ const MessageInput = (props) => {
         e.preventDefault();
         inputEl.current?.focus();
 
-        if(message){
-          props.addMessage(props.chatId, { author: AUTHOR.me ? AUTHOR.me : AUTHOR.default, text: message});
-          setMessage("");
+        if (message) {
+            props.addMessage(props.chatId, { author: AUTHOR.me ? AUTHOR.me : AUTHOR.default, text: message });
+            setMessage("");
         }
         else
-          console.log("Empty message");
-      }      
+            console.log("Empty message");
+    }
 
-    const handleMessageInput =(e) =>{
+    const handleMessageInput = (e) => {
         setMessage(e.target.value);
-      }
+    }
 
     return (
         <Box
