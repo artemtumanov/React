@@ -4,18 +4,28 @@ import MessageInput from './MessageInput';
 import Message from './Message';
 import { useEffect, } from 'react';
 import { AUTHOR } from '../constant/common';
-import { useOutletContext } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { addMessage } from '../store/messages/action';
 
-const Chat = (props) => {
-  const { chatId } = props;
-  const [chatList, addMessage] = useOutletContext();
+const Chat = ({ chat }) => {
+  const { id, name } = chat;
+  const dispatch = useDispatch()
+  const allMessageList = useSelector((state) => state.messages.messageList)
+
+  const messageList = allMessageList[id] || [] ;
+
   const bot = () => {
     let text = 'Спасибо за отзыв';
-    addMessage(chatId, { author: AUTHOR.bot, text: text });
+    sendMessage({ author: AUTHOR.bot, text: text });
+  }
+  const sendMessage = (message) => {
+    dispatch(addMessage(id, message));
   }
 
+
+
   useEffect(() => {
-    if (chatList[chatId].messages.length && chatList[chatId].messages[chatList[chatId].messages.length - 1].author !== AUTHOR.bot) {
+    if (messageList.length && messageList[messageList.length - 1].author !== AUTHOR.bot) {
       let timerId = setTimeout(bot, 1500);
       return () => {
         clearTimeout(timerId);
@@ -37,11 +47,11 @@ const Chat = (props) => {
         borderRadius: 1,
         p: 3,
       }}>
-      <h1>{chatList[chatId].name}</h1>
+      <h1>{name}</h1>
       <List className="message-list">
-        {chatList[chatId].messages.map((singlemessage, index) => (<Message key={index} data={singlemessage} />))}
+        {messageList.map((singlemessage) => (<Message key={singlemessage.id} data={singlemessage} />))}
       </List>
-      <MessageInput addMessage={addMessage} chatId={chatId} />
+      <MessageInput sendMessage={sendMessage} />
     </Box>
 
   )

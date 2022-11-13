@@ -1,17 +1,19 @@
 import { useRef, useState } from 'react';
 import { Button, Box, TextField } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
-import { AUTHOR } from '../constant/common'
+import { useSelector } from 'react-redux';
 
-const MessageInput = (props) => {
+const MessageInput = ({ sendMessage }) => {
     const inputEl = useRef();
     const [message, setMessage] = useState([]);
+    const { name } = useSelector((state) => state.profile)
+
     const submitForm = (e) => {
         e.preventDefault();
         inputEl.current?.focus();
 
         if (message) {
-            props.addMessage(props.chatId, { author: AUTHOR.me ? AUTHOR.me : AUTHOR.default, text: message });
+            sendMessage({ author: name, text: message });
             setMessage("");
         }
         else
@@ -49,10 +51,7 @@ const MessageInput = (props) => {
                 Send
             </Button>
         </Box>
-
     )
-
-
 }
 
 export default MessageInput;

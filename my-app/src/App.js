@@ -1,38 +1,26 @@
 import './App.css';
-import Container from '@mui/material/Container';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
+import {
+  Container,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  ListItemButton,
+  Collapse,
+} from '@mui/material';
+
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
-import Collapse from '@mui/material/Collapse';
-import ListItemButton from '@mui/material/ListItemButton';
 import { Outlet, Link as RouterLink } from "react-router-dom";
-import { AUTHOR } from './constant/common'
 import React from 'react';
+import ChatListController from './components/ChatListController';
 
-const initialChats = {
-  id1: {
-    name: 'Chat 1',
-    messages: [{ author: AUTHOR.bot, text: 'Welcome to Chat1' }]
-  },
-  id2: {
-    name: 'Chat 2',
-    messages: [{ author: AUTHOR.bot, text: 'Welcome to Chat2' }]
-  }
-}
 
-function App() {
-  const [chatList, setChatList] = React.useState(initialChats);
+
+function App() {  
   const [open, setOpen] = React.useState(true);
-  const addMessage = (chatId, message) => {
-
-    setChatList({ ...chatList, [chatId]: { name: chatList[chatId].name, messages: [...chatList[chatId].messages, message] } });
-  }
 
   const handleClick = () => {
-    //console.log(props);
     setOpen(!open);
   };
 
@@ -47,7 +35,9 @@ function App() {
     );
     return (
       <li>
-        <ListItem button component={renderLink}>
+        <ListItem button
+        component={renderLink}
+        >
           {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
           <ListItemText primary={primary} />
         </ListItem>
@@ -61,19 +51,15 @@ function App() {
         <List>
           <ListItemLink to="/" primary="Home" />
           <ListItemLink to="profile" primary="Profile" />
-
           <ListItemButton onClick={handleClick}>
             <ListItemText primary="Chats" />
             {open ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              {Object.keys(chatList).map((id, key) => (<ListItemLink to={'chats/' + id} primary={chatList[id].name} key={key} />))}
-
-            </List>
+          <Collapse in={open} timeout="auto">
+            <ChatListController/>
           </Collapse>
         </List>
-        <Outlet context={[chatList, addMessage]} />
+        <Outlet />
 
       </Container>
     </div>
@@ -81,5 +67,3 @@ function App() {
 }
 
 export default App;
-
-

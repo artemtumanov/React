@@ -10,7 +10,6 @@ const MessageInput = (props) => {
     const submitForm = (e) => {
         e.preventDefault();
         inputEl.current?.focus();
-        //console.log(e);
         if(message){
           props.addMessage(AUTHOR.me ? AUTHOR.me : AUTHOR.default, message);
           setMessage("");
