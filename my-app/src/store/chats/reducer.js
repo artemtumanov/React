@@ -4,6 +4,17 @@ const initialState = {
     chatList:[],
     lastIndex: 0
 };
+/**
+ * 
+ * chatItem = {id: strind, name: string} 
+ * 
+     const chatList = [
+        {
+            id: 'some',
+            name: 'string'
+        }
+    ]
+*/
 
 const chatsReducer = (state = initialState,action) =>{
     switch (action.type) {

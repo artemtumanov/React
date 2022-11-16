@@ -2,36 +2,21 @@ import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 import MessageInput from './MessageInput';
 import Message from './Message';
-import { useEffect, } from 'react';
-import { AUTHOR } from '../constant/common';
 import { useDispatch, useSelector } from 'react-redux';
-import { addMessage } from '../store/messages/action';
+import { addMessageWithTunk } from '../store/messages/action';
 
 const Chat = ({ chat }) => {
   const { id, name } = chat;
+  //console.log(chat);
   const dispatch = useDispatch()
   const allMessageList = useSelector((state) => state.messages.messageList)
 
-  const messageList = allMessageList[id] || [] ;
+  const messageList = allMessageList[id] || [];
 
-  const bot = () => {
-    let text = 'Спасибо за отзыв';
-    sendMessage({ author: AUTHOR.bot, text: text });
-  }
   const sendMessage = (message) => {
-    dispatch(addMessage(id, message));
+    //console.log(id);
+    dispatch(addMessageWithTunk(id, message));
   }
-
-
-
-  useEffect(() => {
-    if (messageList.length && messageList[messageList.length - 1].author !== AUTHOR.bot) {
-      let timerId = setTimeout(bot, 1500);
-      return () => {
-        clearTimeout(timerId);
-      }
-    }
-  });
 
   return (
     <Box
@@ -58,3 +43,5 @@ const Chat = ({ chat }) => {
 }
 
 export default Chat;
+
+//

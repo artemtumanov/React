@@ -31,12 +31,11 @@ const ChatListController = (props) => {
       }
       const handleAddNewChat = () => {
         dispatch(addChat(chatName));
-        handleDialogClose();
-    
+        handleDialogClose();    
       }
-      const handleChatDelete = (e) =>{
+      const handleChatDelete = (e) =>{       
         dispatch(delChat(e.target.closest('button').value));
-        e.preventDefault();
+        e.preventDefault();        
       }
 
 

@@ -17,7 +17,7 @@ import ChatListController from './components/ChatListController';
 
 
 
-function App() {  
+function App() {
   const [open, setOpen] = React.useState(true);
 
   const handleClick = () => {
@@ -36,7 +36,7 @@ function App() {
     return (
       <li>
         <ListItem button
-        component={renderLink}
+          component={renderLink}
         >
           {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
           <ListItemText primary={primary} />
@@ -55,8 +55,8 @@ function App() {
             <ListItemText primary="Chats" />
             {open ? <ExpandLess /> : <ExpandMore />}
           </ListItemButton>
-          <Collapse in={open} timeout="auto">
-            <ChatListController/>
+          <Collapse in={open} timeout="auto" /*unmountOnExit*/ >
+            <ChatListController />
           </Collapse>
         </List>
         <Outlet />
@@ -67,3 +67,7 @@ function App() {
 }
 
 export default App;
+
+
+//{Object.keys(chatList).map((id, key) => (<ListItemLink to={'chats/' + id} primary={chatList[id].name} key={key} />))}
+//context={[chatList, addMessage]}

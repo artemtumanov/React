@@ -3,10 +3,25 @@ import { ADD_MESSAGE } from "./action"
 const initialState = {
     messageList: {}
 }
+/**messageList
+  {
+      chatId: [{id, text, author}]
+  }
+  ----
+ type messageItem = {
+     id: string,
+     text: string,
+     author: string
+ }
+ ----
+ type messageList = Record <[string], messageItem[]>
+ [string]: messageItem[]
+ */
 
 const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_MESSAGE: {
+            console.log(action);
             let { chatId, message } = action.payload;
             let oldMessages = state.messageList[chatId] || [];
 
@@ -19,6 +34,9 @@ const messagesReducer = (state = initialState, action) => {
                         {
                             id: `${chatId}${oldMessages.length}`,
                             ...message
+
+
+
                         }
                     ]
                 }

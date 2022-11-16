@@ -13,7 +13,8 @@ import Chats from './pages/Chats';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
 import { Provider } from 'react-redux';
-import store from './store/index'
+import { persistor, store } from './store/index'
+import { PersistGate } from 'redux-persist/integration/react';
 
 const theme = createTheme({
   status: {
@@ -29,26 +30,30 @@ const theme = createTheme({
 
 ReactDOM.render(
   <React.StrictMode>
+
     <Provider store={store}>
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
-          <Routes>
-            <Route path="/" element={<App />}>
-              <Route index element={<Home />} />
-              <Route path="/chats" element={<Chats />}>
-                <Route path=":chatId" element={<Chats />} />
+      <PersistGate persistor={persistor}>
+        <BrowserRouter>
+          <ThemeProvider theme={theme}>
+            <Routes>
+              <Route path="/" element={<App />}>
+                <Route index element={<Home />} />
+                <Route path="/chats" element={<Chats />}>
+                  <Route path=":chatId" element={<Chats />} />
+                </Route>
+                <Route path="/profile" element={<Profile />} />
+                <Route path="*" element={
+                  <main style={{ padding: "1rem" }}>
+                    <p>There's nothing here!</p>
+                  </main>
+                } />
               </Route>
-              <Route path="/profile" element={<Profile />} />
-              <Route path="*" element={
-                <main style={{ padding: "1rem" }}>
-                  <p>There's nothing here!</p>
-                </main>
-              } />
-            </Route>
-          </Routes>
-        </ThemeProvider>
-      </BrowserRouter>
+            </Routes>
+          </ThemeProvider>
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
+
   </React.StrictMode>,
   document.getElementById('root')
 );
