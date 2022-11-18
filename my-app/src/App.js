@@ -51,6 +51,7 @@ function App() {
         <List>
           <ListItemLink to="/" primary="Home" />
           <ListItemLink to="profile" primary="Profile" />
+          <ListItemLink to="gists" primary="Gists" />
           <ListItemButton onClick={handleClick}>
             <ListItemText primary="Chats" />
             {open ? <ExpandLess /> : <ExpandMore />}
@@ -67,7 +68,3 @@ function App() {
 }
 
 export default App;
-
-
-//{Object.keys(chatList).map((id, key) => (<ListItemLink to={'chats/' + id} primary={chatList[id].name} key={key} />))}
-//context={[chatList, addMessage]}

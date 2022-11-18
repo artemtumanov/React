@@ -7,9 +7,8 @@ import { addMessageWithTunk } from '../store/messages/action';
 
 const Chat = ({ chat }) => {
   const { id, name } = chat;
-  //console.log(chat);
-  const dispatch = useDispatch()
-  const allMessageList = useSelector((state) => state.messages.messageList)
+  const dispatch = useDispatch();
+  const allMessageList = useSelector((state) => state.messages.messageList);
 
   const messageList = allMessageList[id] || [];
 
@@ -43,5 +42,3 @@ const Chat = ({ chat }) => {
 }
 
 export default Chat;
-
-//

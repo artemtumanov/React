@@ -15,15 +15,14 @@ import Profile from './pages/Profile';
 import { Provider } from 'react-redux';
 import { persistor, store } from './store/index'
 import { PersistGate } from 'redux-persist/integration/react';
+import Gists from './pages/Gists';
 
 const theme = createTheme({
   status: {
     danger: orange[500],
   },
   palette: {
-    //mode: 'dark',
     background: {
-      //default: '#001E3C'
     }
   },
 });
@@ -38,10 +37,11 @@ ReactDOM.render(
             <Routes>
               <Route path="/" element={<App />}>
                 <Route index element={<Home />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/gists" element={<Gists />} />
                 <Route path="/chats" element={<Chats />}>
                   <Route path=":chatId" element={<Chats />} />
                 </Route>
-                <Route path="/profile" element={<Profile />} />
                 <Route path="*" element={
                   <main style={{ padding: "1rem" }}>
                     <p>There's nothing here!</p>
