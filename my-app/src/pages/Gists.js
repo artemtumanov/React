@@ -11,10 +11,46 @@ import { selectGists, selectGistsError, selectGistsLoading } from "../store/gist
 import { getAllGists } from '../store/gists/actions';
 
 const Gists = () => {
+    // const [gists, setGists] = useState([]);
+    // const [error, setError] = useState(false);
+    // const [isLoading, setIsLoading] = useState(false);
+
     const dispatch = useDispatch();
     const gists = useSelector(selectGists);
     const isLoading = useSelector(selectGistsLoading);
     const error = useSelector(selectGistsError);
+    
+    // const getGists = useCallback( () => {
+    //     setIsLoading(true);
+    //     fetch(API_URL_PUBLIC)
+    //         .then((response) => {
+    //             if (response.ok) {
+    //                 return response.json();
+    //             }
+    //             throw new Error(`Request failed with status ${response.status}`);
+    //         })
+    //         .then((result) => setGists(result))
+    //         .catch((er) => { setError(true); })
+    //         .finally(() => setIsLoading(false));
+    // },[]);
+    // const getGists = useCallback(async () => {
+    //     setIsLoading(true);
+    //     try{            
+    //         const response = await fetch(API_URL_PUBLIC);
+    //         if(!response.ok){
+    //             throw new Error(`Requestq failed with status ${response.status}`);
+    //         }            
+    //         const result = await response.json()
+    //         setGists(result);
+    //     }
+    //     catch (e) {
+    //         setError(true);
+    //         
+    //     }
+    //     finally {
+    //         setIsLoading(false);
+    //     }
+    // },[]);
 
     const getGists = useCallback(async () => {
         
