@@ -4,16 +4,16 @@ export const GET_GISTS_REQUEST = 'GISTS::GET_GISTS_REQUEST';
 export const GET_GISTS_SUCCESS = 'GISTS::GET_GISTS_SUCCESS';
 export const GET_GISTS_FAILURE = 'GISTS::GET_GISTS_FAILURE';
 
-const getGistsRequest = () => ({
+export const getGistsRequest = () => ({
     type: GET_GISTS_REQUEST
 });
 
-const getGistSuccess = (gists) => ({
+export const getGistSuccess = (gists) => ({
     type: GET_GISTS_SUCCESS,
     payload: gists
 });
 
-const getGistsFaluire = (error) => ({
+export const getGistsFaluire = (error) => ({
     type: GET_GISTS_FAILURE,
     payload: error
 });
